@@ -1,0 +1,597 @@
+CREATE TABLE Category (
+  2      Category_ID NUMBER PRIMARY KEY,
+  3      Category_Name VARCHAR2(50) UNIQUE,
+  4      Description VARCHAR2(200)
+  5  );
+
+Table created.
+
+SQL> 
+SQL> INSERT INTO Category VALUES
+  2  (1, 'Footwear', 'Shoes and footwear products');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Category VALUES
+  2  (2, 'Books', 'Educational and general books');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Category VALUES
+  2  (3, 'Beauty', 'Beauty and personal care products');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Category VALUES
+  2  (4, 'Grocery', 'Food and grocery products');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Category VALUES
+  2  (5, 'Sports', 'Sports and fitness products');
+
+1 row created.
+
+SQL> 
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> 
+SQL> 
+SQL> CREATE TABLE Product (
+  2      Product_ID NUMBER PRIMARY KEY,
+  3      Product_Name VARCHAR2(100) NOT NULL,
+  4      Category_ID NUMBER,
+  5      Price NUMBER(10,2) NOT NULL,
+  6      Stock NUMBER NOT NULL,
+  7      Description VARCHAR2(200),
+  8      FOREIGN KEY (Category_ID) REFERENCES Category(Category_ID)
+  9  );
+
+Table created.
+
+SQL> 
+SQL> 
+SQL> INSERT INTO Product VALUES
+  2  (23, 'Nike Running Shoes', 1, 4999, 15,
+  3  'Lightweight running shoes');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Product VALUES
+  2  (24, 'Adidas Casual Shoes', 1, 3599, 20,
+  3  'Comfortable casual shoes');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Product VALUES
+  2  (25, 'Puma Sports Shoes', 1, 2999, 18,
+  3  'Durable sports shoes');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Product VALUES
+  2  (26, 'Atomic Habits', 2, 499, 30,
+  3  'Self improvement book');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Product VALUES
+  2  (27, 'Python Programming', 2, 699, 25,
+  3  'Beginner programming book');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Product VALUES
+  2  (28, 'Rich Dad Poor Dad', 2, 399, 35,
+  3  'Personal finance book');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Product VALUES
+  2  (29, 'Lakme Face Cream', 3, 399, 40,
+  3  'Moisturizing face cream');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Product VALUES
+  2  (30, 'Maybelline Lipstick', 3, 599, 30,
+  3  'Long lasting lipstick');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Product VALUES
+  2  (31, 'Nivea Body Lotion', 3, 349, 45,
+  3  'Moisturizing body lotion');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Product VALUES
+  2  (32, 'Aashirvaad Atta 5kg', 4, 299, 50,
+  3  'Whole wheat flour');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Product VALUES
+  2  (33, 'Tata Salt 1kg', 4, 30, 60,
+  3  'Refined iodized salt');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Product VALUES
+  2  (34, 'Bru Instant Coffee 100g', 4, 275, 40,
+  3  'Instant coffee powder');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Product VALUES
+  2  (35, 'Yoga Mat', 5, 799, 25,
+  3  'Non slip exercise yoga mat');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Product VALUES
+  2  (36, 'Cosco Cricket Bat', 5, 1499, 15,
+  3  'Lightweight cricket bat');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Product VALUES
+  2  (37, 'Nivia Football', 5, 999, 20,
+  3  'Durable football for outdoor play');
+
+1 row created.
+
+SQL> 
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> 
+SQL> 
+SQL> SELECT * FROM Category;
+
+CATEGORY_ID CATEGORY_NAME
+----------- --------------------------------------------------
+DESCRIPTION
+--------------------------------------------------------------------------------
+          1 Footwear
+Shoes and footwear products
+
+          2 Books
+Educational and general books
+
+          3 Beauty
+Beauty and personal care products
+
+
+CATEGORY_ID CATEGORY_NAME
+----------- --------------------------------------------------
+DESCRIPTION
+--------------------------------------------------------------------------------
+          4 Grocery
+Food and grocery products
+
+          5 Sports
+Sports and fitness products
+
+
+SQL> 
+SQL> SELECT * FROM Product;
+
+PRODUCT_ID
+----------
+PRODUCT_NAME
+--------------------------------------------------------------------------------
+CATEGORY_ID      PRICE      STOCK
+----------- ---------- ----------
+DESCRIPTION
+--------------------------------------------------------------------------------
+        23
+Nike Running Shoes
+          1       4999         15
+Lightweight running shoes
+
+
+PRODUCT_ID
+----------
+PRODUCT_NAME
+--------------------------------------------------------------------------------
+CATEGORY_ID      PRICE      STOCK
+----------- ---------- ----------
+DESCRIPTION
+--------------------------------------------------------------------------------
+        24
+Adidas Casual Shoes
+          1       3599         20
+Comfortable casual shoes
+
+
+PRODUCT_ID
+----------
+PRODUCT_NAME
+--------------------------------------------------------------------------------
+CATEGORY_ID      PRICE      STOCK
+----------- ---------- ----------
+DESCRIPTION
+--------------------------------------------------------------------------------
+        25
+Puma Sports Shoes
+          1       2999         18
+Durable sports shoes
+
+
+PRODUCT_ID
+----------
+PRODUCT_NAME
+--------------------------------------------------------------------------------
+CATEGORY_ID      PRICE      STOCK
+----------- ---------- ----------
+DESCRIPTION
+--------------------------------------------------------------------------------
+        26
+Atomic Habits
+          2        499         30
+Self improvement book
+
+
+PRODUCT_ID
+----------
+PRODUCT_NAME
+--------------------------------------------------------------------------------
+CATEGORY_ID      PRICE      STOCK
+----------- ---------- ----------
+DESCRIPTION
+--------------------------------------------------------------------------------
+        27
+Python Programming
+          2        699         25
+Beginner programming book
+
+
+PRODUCT_ID
+----------
+PRODUCT_NAME
+--------------------------------------------------------------------------------
+CATEGORY_ID      PRICE      STOCK
+----------- ---------- ----------
+DESCRIPTION
+--------------------------------------------------------------------------------
+        28
+Rich Dad Poor Dad
+          2        399         35
+Personal finance book
+
+
+PRODUCT_ID
+----------
+PRODUCT_NAME
+--------------------------------------------------------------------------------
+CATEGORY_ID      PRICE      STOCK
+----------- ---------- ----------
+DESCRIPTION
+--------------------------------------------------------------------------------
+        29
+Lakme Face Cream
+          3        399         40
+Moisturizing face cream
+
+
+PRODUCT_ID
+----------
+PRODUCT_NAME
+--------------------------------------------------------------------------------
+CATEGORY_ID      PRICE      STOCK
+----------- ---------- ----------
+DESCRIPTION
+--------------------------------------------------------------------------------
+        30
+Maybelline Lipstick
+          3        599         30
+Long lasting lipstick
+
+
+PRODUCT_ID
+----------
+PRODUCT_NAME
+--------------------------------------------------------------------------------
+CATEGORY_ID      PRICE      STOCK
+----------- ---------- ----------
+DESCRIPTION
+--------------------------------------------------------------------------------
+        31
+Nivea Body Lotion
+          3        349         45
+Moisturizing body lotion
+
+
+PRODUCT_ID
+----------
+PRODUCT_NAME
+--------------------------------------------------------------------------------
+CATEGORY_ID      PRICE      STOCK
+----------- ---------- ----------
+DESCRIPTION
+--------------------------------------------------------------------------------
+        32
+Aashirvaad Atta 5kg
+          4        299         50
+Whole wheat flour
+
+
+PRODUCT_ID
+----------
+PRODUCT_NAME
+--------------------------------------------------------------------------------
+CATEGORY_ID      PRICE      STOCK
+----------- ---------- ----------
+DESCRIPTION
+--------------------------------------------------------------------------------
+        33
+Tata Salt 1kg
+          4         30         60
+Refined iodized salt
+
+
+PRODUCT_ID
+----------
+PRODUCT_NAME
+--------------------------------------------------------------------------------
+CATEGORY_ID      PRICE      STOCK
+----------- ---------- ----------
+DESCRIPTION
+--------------------------------------------------------------------------------
+        34
+Bru Instant Coffee 100g
+          4        275         40
+Instant coffee powder
+
+
+PRODUCT_ID
+----------
+PRODUCT_NAME
+--------------------------------------------------------------------------------
+CATEGORY_ID      PRICE      STOCK
+----------- ---------- ----------
+DESCRIPTION
+--------------------------------------------------------------------------------
+        35
+Yoga Mat
+          5        799         25
+Non slip exercise yoga mat
+
+
+PRODUCT_ID
+----------
+PRODUCT_NAME
+--------------------------------------------------------------------------------
+CATEGORY_ID      PRICE      STOCK
+----------- ---------- ----------
+DESCRIPTION
+--------------------------------------------------------------------------------
+        36
+Cosco Cricket Bat
+          5       1499         15
+Lightweight cricket bat
+
+
+PRODUCT_ID
+----------
+PRODUCT_NAME
+--------------------------------------------------------------------------------
+CATEGORY_ID      PRICE      STOCK
+----------- ---------- ----------
+DESCRIPTION
+--------------------------------------------------------------------------------
+        37
+Nivia Football
+          5        999         20
+Durable football for outdoor play
+
+
+15 rows selected.
+
+SQL> 
+SQL> 
+SQL> UPDATE Product
+  2  SET Price = 4499
+  3  WHERE Product_ID = 23;
+
+1 row updated.
+
+SQL> 
+SQL> UPDATE Product
+  2  SET Stock = 30
+  3  WHERE Product_ID = 32;
+
+1 row updated.
+
+SQL> 
+SQL> UPDATE Product
+  2  SET Product_Name = 'Premium Yoga Mat',
+  3      Price = 899
+  4  WHERE Product_ID = 35;
+
+1 row updated.
+
+SQL> 
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> 
+SQL> 
+SQL> DELETE FROM Product
+  2  WHERE Product_ID = 37;
+
+1 row deleted.
+
+SQL> 
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> 
+SQL> 
+SQL> SELECT
+  2      c.Category_Name,
+  3      p.Product_Name,
+  4      p.Price,
+  5      p.Stock
+  6  FROM Category c
+  7  JOIN Product p
+  8  ON c.Category_ID = p.Category_ID
+  9  ORDER BY c.Category_Name;
+
+CATEGORY_NAME
+--------------------------------------------------
+PRODUCT_NAME
+--------------------------------------------------------------------------------
+     PRICE      STOCK
+---------- ----------
+Beauty
+Lakme Face Cream
+       399         40
+
+Beauty
+Nivea Body Lotion
+       349         45
+
+CATEGORY_NAME
+--------------------------------------------------
+PRODUCT_NAME
+--------------------------------------------------------------------------------
+     PRICE      STOCK
+---------- ----------
+
+Beauty
+Maybelline Lipstick
+       599         30
+
+Books
+Python Programming
+
+CATEGORY_NAME
+--------------------------------------------------
+PRODUCT_NAME
+--------------------------------------------------------------------------------
+     PRICE      STOCK
+---------- ----------
+       699         25
+
+Books
+Rich Dad Poor Dad
+       399         35
+
+Books
+
+CATEGORY_NAME
+--------------------------------------------------
+PRODUCT_NAME
+--------------------------------------------------------------------------------
+     PRICE      STOCK
+---------- ----------
+Atomic Habits
+       499         30
+
+Footwear
+Adidas Casual Shoes
+      3599         20
+
+
+CATEGORY_NAME
+--------------------------------------------------
+PRODUCT_NAME
+--------------------------------------------------------------------------------
+     PRICE      STOCK
+---------- ----------
+Footwear
+Puma Sports Shoes
+      2999         18
+
+Footwear
+Nike Running Shoes
+      4499         15
+
+CATEGORY_NAME
+--------------------------------------------------
+PRODUCT_NAME
+--------------------------------------------------------------------------------
+     PRICE      STOCK
+---------- ----------
+
+Grocery
+Tata Salt 1kg
+        30         60
+
+Grocery
+Aashirvaad Atta 5kg
+
+CATEGORY_NAME
+--------------------------------------------------
+PRODUCT_NAME
+--------------------------------------------------------------------------------
+     PRICE      STOCK
+---------- ----------
+       299         30
+
+Grocery
+Bru Instant Coffee 100g
+       275         40
+
+Sports
+
+CATEGORY_NAME
+--------------------------------------------------
+PRODUCT_NAME
+--------------------------------------------------------------------------------
+     PRICE      STOCK
+---------- ----------
+Cosco Cricket Bat
+      1499         15
+
+Sports
+Premium Yoga Mat
+       899         25
+
+
+14 rows selected.
+
+SQL> 
+SQL> 
+SQL> SELECT
+  2      c.Category_Name,
+  3      COUNT(p.Product_ID) AS Total_Products
+  4  FROM Category c
+  5  LEFT JOIN Product p
+  6  ON c.Category_ID = p.Category_ID
+  7  GROUP BY c.Category_Name
+  8  ORDER BY c.Category_Name;
+
+CATEGORY_NAME                                      TOTAL_PRODUCTS
+-------------------------------------------------- --------------
+Beauty                                                          3
+Books                                                           3
+Footwear                                                        3
+Grocery                                                         3
+Sports                                                          2
+

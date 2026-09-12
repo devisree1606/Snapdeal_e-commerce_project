@@ -1,0 +1,144 @@
+CREATE TABLE Category (
+    Category_ID NUMBER PRIMARY KEY,
+    Category_Name VARCHAR2(50) UNIQUE,
+    Description VARCHAR2(200)
+);
+
+INSERT INTO Category VALUES
+(1, 'Footwear', 'Shoes and footwear products');
+
+INSERT INTO Category VALUES
+(2, 'Books', 'Educational and general books');
+
+INSERT INTO Category VALUES
+(3, 'Beauty', 'Beauty and personal care products');
+
+INSERT INTO Category VALUES
+(4, 'Grocery', 'Food and grocery products');
+
+INSERT INTO Category VALUES
+(5, 'Sports', 'Sports and fitness products');
+
+COMMIT;
+
+
+CREATE TABLE Product (
+    Product_ID NUMBER PRIMARY KEY,
+    Product_Name VARCHAR2(100) NOT NULL,
+    Category_ID NUMBER,
+    Price NUMBER(10,2) NOT NULL,
+    Stock NUMBER NOT NULL,
+    Description VARCHAR2(200),
+    FOREIGN KEY (Category_ID) REFERENCES Category(Category_ID)
+);
+
+
+INSERT INTO Product VALUES
+(23, 'Nike Running Shoes', 1, 4999, 15,
+'Lightweight running shoes');
+
+INSERT INTO Product VALUES
+(24, 'Adidas Casual Shoes', 1, 3599, 20,
+'Comfortable casual shoes');
+
+INSERT INTO Product VALUES
+(25, 'Puma Sports Shoes', 1, 2999, 18,
+'Durable sports shoes');
+
+INSERT INTO Product VALUES
+(26, 'Atomic Habits', 2, 499, 30,
+'Self improvement book');
+
+INSERT INTO Product VALUES
+(27, 'Python Programming', 2, 699, 25,
+'Beginner programming book');
+
+INSERT INTO Product VALUES
+(28, 'Rich Dad Poor Dad', 2, 399, 35,
+'Personal finance book');
+
+INSERT INTO Product VALUES
+(29, 'Lakme Face Cream', 3, 399, 40,
+'Moisturizing face cream');
+
+INSERT INTO Product VALUES
+(30, 'Maybelline Lipstick', 3, 599, 30,
+'Long lasting lipstick');
+
+INSERT INTO Product VALUES
+(31, 'Nivea Body Lotion', 3, 349, 45,
+'Moisturizing body lotion');
+
+INSERT INTO Product VALUES
+(32, 'Aashirvaad Atta 5kg', 4, 299, 50,
+'Whole wheat flour');
+
+INSERT INTO Product VALUES
+(33, 'Tata Salt 1kg', 4, 30, 60,
+'Refined iodized salt');
+
+INSERT INTO Product VALUES
+(34, 'Bru Instant Coffee 100g', 4, 275, 40,
+'Instant coffee powder');
+
+INSERT INTO Product VALUES
+(35, 'Yoga Mat', 5, 799, 25,
+'Non slip exercise yoga mat');
+
+INSERT INTO Product VALUES
+(36, 'Cosco Cricket Bat', 5, 1499, 15,
+'Lightweight cricket bat');
+
+INSERT INTO Product VALUES
+(37, 'Nivia Football', 5, 999, 20,
+'Durable football for outdoor play');
+
+COMMIT;
+
+
+SELECT * FROM Category;
+
+SELECT * FROM Product;
+
+
+UPDATE Product
+SET Price = 4499
+WHERE Product_ID = 23;
+
+UPDATE Product
+SET Stock = 30
+WHERE Product_ID = 32;
+
+UPDATE Product
+SET Product_Name = 'Premium Yoga Mat',
+    Price = 899
+WHERE Product_ID = 35;
+
+COMMIT;
+
+
+DELETE FROM Product
+WHERE Product_ID = 37;
+
+COMMIT;
+
+
+SELECT
+    c.Category_Name,
+    p.Product_Name,
+    p.Price,
+    p.Stock
+FROM Category c
+JOIN Product p
+ON c.Category_ID = p.Category_ID
+ORDER BY c.Category_Name;
+
+
+SELECT
+    c.Category_Name,
+    COUNT(p.Product_ID) AS Total_Products
+FROM Category c
+LEFT JOIN Product p
+ON c.Category_ID = p.Category_ID
+GROUP BY c.Category_Name
+ORDER BY c.Category_Name;
