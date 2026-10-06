@@ -1,0 +1,232 @@
+SQL> CREATE TABLE Orders (
+  2      Order_ID NUMBER PRIMARY KEY,
+  3      Customer_ID NUMBER,
+  4      Order_Date DATE,
+  5      Total_Amount NUMBER(10,2),
+  6      Order_Status VARCHAR2(20)
+  7  );
+
+Table created.
+
+SQL> 
+SQL> CREATE TABLE Order_Details (
+  2      Order_Detail_ID NUMBER PRIMARY KEY,
+  3      Order_ID NUMBER,
+  4      Product_ID NUMBER,
+  5      Quantity NUMBER,
+  6      Unit_Price NUMBER(10,2),
+  7      Subtotal NUMBER(10,2),
+  8      FOREIGN KEY (Order_ID) REFERENCES Orders(Order_ID)
+  9  );
+
+Table created.
+
+SQL> 
+SQL> INSERT INTO Orders VALUES
+  2  (1001, 101, TO_DATE('22-SEP-2026','DD-MON-YYYY'), 1500, 'Delivered');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Orders VALUES
+  2  (1002, 102, TO_DATE('22-SEP-2026','DD-MON-YYYY'), 2499, 'Shipped');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Orders VALUES
+  2  (1003, 103, TO_DATE('23-SEP-2026','DD-MON-YYYY'), 899, 'Processing');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Orders VALUES
+  2  (1004, 104, TO_DATE('23-SEP-2026','DD-MON-YYYY'), 3200, 'Delivered');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Orders VALUES
+  2  (1005, 105, TO_DATE('24-SEP-2026','DD-MON-YYYY'), 1250, 'Pending');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Orders VALUES
+  2  (1006, 106, TO_DATE('24-SEP-2026','DD-MON-YYYY'), 2750, 'Shipped');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Orders VALUES
+  2  (1007, 107, TO_DATE('25-SEP-2026','DD-MON-YYYY'), 999, 'Processing');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Orders VALUES
+  2  (1008, 108, TO_DATE('25-SEP-2026','DD-MON-YYYY'), 1850, 'Delivered');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Order_Details VALUES
+  2  (1, 1001, 201, 2, 500, 1000);
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Order_Details VALUES
+  2  (2, 1001, 202, 1, 500, 500);
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Order_Details VALUES
+  2  (3, 1002, 203, 1, 2499, 2499);
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Order_Details VALUES
+  2  (4, 1003, 204, 3, 299, 897);
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Order_Details VALUES
+  2  (5, 1004, 205, 2, 1200, 2400);
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Order_Details VALUES
+  2  (6, 1005, 206, 1, 1250, 1250);
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Order_Details VALUES
+  2  (7, 1006, 207, 2, 1375, 2750);
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Order_Details VALUES
+  2  (8, 1007, 208, 1, 999, 999);
+
+1 row created.
+
+SQL> 
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> 
+SQL> SELECT * FROM Orders;
+
+  ORDER_ID CUSTOMER_ID ORDER_DAT TOTAL_AMOUNT ORDER_STATUS
+---------- ----------- --------- ------------ --------------------
+      1001         101 22-SEP-26         1500 Delivered
+      1002         102 22-SEP-26         2499 Shipped
+      1003         103 23-SEP-26          899 Processing
+      1004         104 23-SEP-26         3200 Delivered
+      1005         105 24-SEP-26         1250 Pending
+      1006         106 24-SEP-26         2750 Shipped
+      1007         107 25-SEP-26          999 Processing
+      1008         108 25-SEP-26         1850 Delivered
+
+8 rows selected.
+
+SQL> 
+SQL> SELECT * FROM Order_Details;
+
+ORDER_DETAIL_ID   ORDER_ID PRODUCT_ID   QUANTITY UNIT_PRICE   SUBTOTAL
+--------------- ---------- ---------- ---------- ---------- ----------
+              1       1001        201          2        500       1000
+              2       1001        202          1        500        500
+              3       1002        203          1       2499       2499
+              4       1003        204          3        299        897
+              5       1004        205          2       1200       2400
+              6       1005        206          1       1250       1250
+              7       1006        207          2       1375       2750
+              8       1007        208          1        999        999
+
+8 rows selected.
+
+SQL> 
+SQL> UPDATE Orders
+  2  SET Order_Status = 'Shipped'
+  3  WHERE Order_ID = 1005;
+
+1 row updated.
+
+SQL> 
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> 
+SQL> SELECT * FROM Orders
+  2  WHERE Order_ID = 1005;
+
+  ORDER_ID CUSTOMER_ID ORDER_DAT TOTAL_AMOUNT ORDER_STATUS
+---------- ----------- --------- ------------ --------------------
+      1005         105 24-SEP-26         1250 Shipped
+
+SQL> 
+SQL> SELECT O.Order_ID,
+  2         O.Customer_ID,
+  3         O.Order_Date,
+  4         D.Product_ID,
+  5         D.Quantity,
+  6         D.Unit_Price,
+  7         D.Subtotal,
+  8         O.Total_Amount,
+  9         O.Order_Status
+ 10  FROM Orders O
+ 11  INNER JOIN Order_Details D
+ 12  ON O.Order_ID = D.Order_ID
+ 13  ORDER BY O.Customer_ID, O.Order_Date;
+
+  ORDER_ID CUSTOMER_ID ORDER_DAT PRODUCT_ID   QUANTITY UNIT_PRICE   SUBTOTAL
+---------- ----------- --------- ---------- ---------- ---------- ----------
+TOTAL_AMOUNT ORDER_STATUS
+------------ --------------------
+      1001         101 22-SEP-26        201          2        500       1000
+        1500 Delivered
+
+      1001         101 22-SEP-26        202          1        500        500
+        1500 Delivered
+
+      1002         102 22-SEP-26        203          1       2499       2499
+        2499 Shipped
+
+
+  ORDER_ID CUSTOMER_ID ORDER_DAT PRODUCT_ID   QUANTITY UNIT_PRICE   SUBTOTAL
+---------- ----------- --------- ---------- ---------- ---------- ----------
+TOTAL_AMOUNT ORDER_STATUS
+------------ --------------------
+      1003         103 23-SEP-26        204          3        299        897
+         899 Processing
+
+      1004         104 23-SEP-26        205          2       1200       2400
+        3200 Delivered
+
+      1005         105 24-SEP-26        206          1       1250       1250
+        1250 Shipped
+
+
+  ORDER_ID CUSTOMER_ID ORDER_DAT PRODUCT_ID   QUANTITY UNIT_PRICE   SUBTOTAL
+---------- ----------- --------- ---------- ---------- ---------- ----------
+TOTAL_AMOUNT ORDER_STATUS
+------------ --------------------
+      1006         106 24-SEP-26        207          2       1375       2750
+        2750 Shipped
+
+      1007         107 25-SEP-26        208          1        999        999
+         999 Processing
+
+
+8 rows selected.
+
