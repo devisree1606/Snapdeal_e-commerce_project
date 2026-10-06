@@ -1,0 +1,261 @@
+SQL> CREATE TABLE Payment (
+  2      Payment_ID NUMBER PRIMARY KEY,
+  3      Order_ID NUMBER,
+  4      Payment_Method VARCHAR2(30),
+  5      Payment_Status VARCHAR2(20),
+  6      Payment_Date DATE,
+  7      Amount NUMBER(10,2),
+  8      FOREIGN KEY (Order_ID) REFERENCES Orders(Order_ID)
+  9  );
+
+Table created.
+
+SQL> 
+SQL> INSERT INTO Payment
+  2  VALUES (1, 1001, 'UPI', 'Completed', DATE '2026-09-22', 2500.00);
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Payment
+  2  VALUES (2, 1002, 'Credit Card', 'Completed', DATE '2026-09-22', 1800.00);
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Payment
+  2  VALUES (3, 1003, 'Debit Card', 'Pending', DATE '2026-09-23', 3200.00);
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Payment
+  2  VALUES (4, 1004, 'Cash on Delivery', 'Pending', DATE '2026-09-23', 1500.00);
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Payment
+  2  VALUES (5, 1005, 'Net Banking', 'Completed', DATE '2026-09-24', 4500.00);
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Payment
+  2  VALUES (6, 1006, 'UPI', 'Completed', DATE '2026-09-24', 2750.00);
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Payment
+  2  VALUES (7, 1007, 'Credit Card', 'Failed', DATE '2026-09-25', 3900.00);
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Payment
+  2  VALUES (8, 1008, 'Debit Card', 'Completed', DATE '2026-09-25', 2100.00);
+
+1 row created.
+
+SQL> 
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> 
+SQL> SELECT * FROM Payment;
+
+PAYMENT_ID   ORDER_ID PAYMENT_METHOD                 PAYMENT_STATUS
+---------- ---------- ------------------------------ --------------------
+PAYMENT_D     AMOUNT
+--------- ----------
+         1       1001 UPI                            Completed
+22-SEP-26       2500
+
+         2       1002 Credit Card                    Completed
+22-SEP-26       1800
+
+         3       1003 Debit Card                     Pending
+23-SEP-26       3200
+
+
+PAYMENT_ID   ORDER_ID PAYMENT_METHOD                 PAYMENT_STATUS
+---------- ---------- ------------------------------ --------------------
+PAYMENT_D     AMOUNT
+--------- ----------
+         4       1004 Cash on Delivery               Pending
+23-SEP-26       1500
+
+         5       1005 Net Banking                    Completed
+24-SEP-26       4500
+
+         6       1006 UPI                            Completed
+24-SEP-26       2750
+
+
+PAYMENT_ID   ORDER_ID PAYMENT_METHOD                 PAYMENT_STATUS
+---------- ---------- ------------------------------ --------------------
+PAYMENT_D     AMOUNT
+--------- ----------
+         7       1007 Credit Card                    Failed
+25-SEP-26       3900
+
+         8       1008 Debit Card                     Completed
+25-SEP-26       2100
+
+
+8 rows selected.
+
+SQL> 
+SQL> SELECT
+  2      Payment_ID,
+  3      Order_ID,
+  4      Payment_Method,
+  5      Payment_Status,
+  6      Payment_Date,
+  7      Amount
+  8  FROM Payment
+  9  WHERE Payment_Status = 'Completed';
+
+PAYMENT_ID   ORDER_ID PAYMENT_METHOD                 PAYMENT_STATUS
+---------- ---------- ------------------------------ --------------------
+PAYMENT_D     AMOUNT
+--------- ----------
+         1       1001 UPI                            Completed
+22-SEP-26       2500
+
+         2       1002 Credit Card                    Completed
+22-SEP-26       1800
+
+         5       1005 Net Banking                    Completed
+24-SEP-26       4500
+
+
+PAYMENT_ID   ORDER_ID PAYMENT_METHOD                 PAYMENT_STATUS
+---------- ---------- ------------------------------ --------------------
+PAYMENT_D     AMOUNT
+--------- ----------
+         6       1006 UPI                            Completed
+24-SEP-26       2750
+
+         8       1008 Debit Card                     Completed
+25-SEP-26       2100
+
+
+SQL> 
+SQL> UPDATE Payment
+  2  SET Payment_Status = 'Completed'
+  3  WHERE Payment_ID = 3;
+
+1 row updated.
+
+SQL> 
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> 
+SQL> SELECT * FROM Payment
+  2  WHERE Payment_ID = 3;
+
+PAYMENT_ID   ORDER_ID PAYMENT_METHOD                 PAYMENT_STATUS
+---------- ---------- ------------------------------ --------------------
+PAYMENT_D     AMOUNT
+--------- ----------
+         3       1003 Debit Card                     Completed
+23-SEP-26       3200
+
+
+SQL> 
+SQL> SELECT
+  2      Payment_ID,
+  3      Order_ID,
+  4      Payment_Method,
+  5      Payment_Status,
+  6      Payment_Date,
+  7      Amount
+  8  FROM Payment
+  9  WHERE Payment_Status = 'Failed';
+
+PAYMENT_ID   ORDER_ID PAYMENT_METHOD                 PAYMENT_STATUS
+---------- ---------- ------------------------------ --------------------
+PAYMENT_D     AMOUNT
+--------- ----------
+         7       1007 Credit Card                    Failed
+25-SEP-26       3900
+
+
+SQL> 
+SQL> SELECT
+  2      Payment_Method,
+  3      COUNT(*) AS Number_of_Payments,
+  4      SUM(Amount) AS Total_Amount
+  5  FROM Payment
+  6  GROUP BY Payment_Method
+  7  ORDER BY Number_of_Payments DESC;
+
+PAYMENT_METHOD                 NUMBER_OF_PAYMENTS TOTAL_AMOUNT
+------------------------------ ------------------ ------------
+UPI                                             2         5250
+Credit Card                                     2         5700
+Debit Card                                      2         5300
+Cash on Delivery                                1         1500
+Net Banking                                     1         4500
+
+SQL> 
+SQL> SELECT
+  2      P.Payment_ID,
+  3      P.Order_ID,
+  4      O.Customer_ID,
+  5      P.Payment_Method,
+  6      P.Payment_Status,
+  7      P.Payment_Date,
+  8      P.Amount,
+  9      O.Order_Status
+ 10  FROM Payment P
+ 11  INNER JOIN Orders O
+ 12  ON P.Order_ID = O.Order_ID
+ 13  ORDER BY P.Payment_Date;
+
+PAYMENT_ID   ORDER_ID CUSTOMER_ID PAYMENT_METHOD
+---------- ---------- ----------- ------------------------------
+PAYMENT_STATUS       PAYMENT_D     AMOUNT ORDER_STATUS
+-------------------- --------- ---------- --------------------
+         1       1001         101 UPI
+Completed            22-SEP-26       2500 Delivered
+
+         2       1002         102 Credit Card
+Completed            22-SEP-26       1800 Shipped
+
+         3       1003         103 Debit Card
+Completed            23-SEP-26       3200 Processing
+
+
+PAYMENT_ID   ORDER_ID CUSTOMER_ID PAYMENT_METHOD
+---------- ---------- ----------- ------------------------------
+PAYMENT_STATUS       PAYMENT_D     AMOUNT ORDER_STATUS
+-------------------- --------- ---------- --------------------
+         4       1004         104 Cash on Delivery
+Pending              23-SEP-26       1500 Delivered
+
+         5       1005         105 Net Banking
+Completed            24-SEP-26       4500 Shipped
+
+         6       1006         106 UPI
+Completed            24-SEP-26       2750 Shipped
+
+
+PAYMENT_ID   ORDER_ID CUSTOMER_ID PAYMENT_METHOD
+---------- ---------- ----------- ------------------------------
+PAYMENT_STATUS       PAYMENT_D     AMOUNT ORDER_STATUS
+-------------------- --------- ---------- --------------------
+         7       1007         107 Credit Card
+Failed               25-SEP-26       3900 Processing
+
+         8       1008         108 Debit Card
+Completed            25-SEP-26       2100 Delivered
+
+
+8 rows selected.
+
